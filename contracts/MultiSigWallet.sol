@@ -5,6 +5,7 @@ pragma solidity ^0.8.4;
 contract MultiSigWallet {
     address[] public owners;
     uint256 public required;
+    uint256 public txnCount;
 
     mapping(address => bool) public isOwner;
     mapping(uint256 => mapping(address => bool)) public approved;
@@ -79,6 +80,8 @@ contract MultiSigWallet {
             Transaction({to: _to, value: _value, executed: false})
         );
 
+        txnCount++;
+
         emit SubmitTransaction(msg.sender, _to, _value);
     }
 
@@ -140,11 +143,19 @@ contract MultiSigWallet {
         emit RevokeApproval(msg.sender, _txnId);
     }
 
+    function getTransactions() external view returns (Transaction[] memory) {
+        return transactions;
+    }
+
     function getOwners() external view returns (address[] memory) {
         return owners;
     }
 
     function getWalletBalance() external view returns (uint256) {
         return address(this).balance;
+    }
+
+    function getWalletAddress() external view returns (address) {
+        return address(this);
     }
 }

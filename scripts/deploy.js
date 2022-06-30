@@ -8,8 +8,13 @@ const main = async () => {
     console.log("MultiSigWallet is deployed to address: ", multiSigWalletContract.address);
 
     let tx1 = await multiSigWalletContract.getOwners();
-
     console.log(tx1);
+
+    let tx2 = await multiSigWalletContract.getWalletBalance();
+    console.log(tx2);
+
+    let tx3 = await multiSigWalletContract.getWalletAddress();
+    console.log(tx3);
 }
 
 const runMain = async () => {
